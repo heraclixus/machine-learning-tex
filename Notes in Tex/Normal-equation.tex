@@ -1,0 +1,80 @@
+   
+\documentclass[11pt]{article}
+\renewcommand{\baselinestretch}{1.05}
+\usepackage{amsmath,amsthm,verbatim,amssymb,amsfonts,amscd, graphicx}
+\usepackage{graphics}
+\topmargin0.0cm
+\headheight0.0cm
+\headsep0.0cm
+\oddsidemargin0.0cm
+\textheight23.0cm
+\textwidth16.5cm
+\footskip1.0cm
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem*{surfacecor}{Corollary 1}
+\newtheorem{conjecture}{Conjecture} 
+\newtheorem{question}{Question} 
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\usepackage[document]{ragged2e}
+
+\begin{document}
+ 
+\title{Derivation of Normal Equation}
+\maketitle
+
+Define the cost function as: 
+\begin{align*}
+\mathbf{J}(\mathbf{w}) = \frac{1}{2} \sum \limits_{n=1}^{N} (Z_n^\top \mathbf{w} - t_n)^2  
+\end{align*}
+let $Z_n \in \mathbb{R}^m$ with samples $z_1, z_2, z_3, ..., z_m$. \newline 
+let $\mathbf{Z}$ be a n by m matrix with each row vector as $Z_i$ and let  $\mathbf{t}$ be a column vector with n dimensions $t_1, t_2, .... t_n$:
+\[
+\mathbf{Z} = \begin{bmatrix}
+Z_1 \\
+Z_2 \\
+... \\
+Z_n
+\end{bmatrix}
+\]
+\[
+\mathbf{t} = \begin{bmatrix}
+t_1 \\
+t_2 \\
+... \\
+t_n
+\end{bmatrix}
+\]
+since \begin{align*}
+\sum \limits_{n=1}^{N} a_n^2 \Longleftrightarrow || \mathbf{a}||^2
+\end{align*}
+We can rewrite the cost function as: 
+\begin{align*}
+&\mathbf{J}(\mathbf{w}) = \frac{1}{2} ||\mathbf{Zw -t}||^2 , \text{ where }\mathbf{J}(\mathbf{w}) : \mathbb{R}^m \rightarrow \mathbb{R}
+\end{align*}
+
+Using chain rule to differentiate the cost function against $\mathbf{w}$ with the variable declaration:
+\begin{align*}
+& \mathbf{ u = Zw -t }\\
+& \mathbf{J} = \frac{1}{2} ||\mathbf{u}||^2
+\end{align*}
+Then we have that: \begin{align*}
+&D_\mathbf{u}(\mathbf{J}) = D_\mathbf{u} (\frac{1}{2}||\mathbf{u}||^2) = \mathbf{u^\top}     \\
+&D_\mathbf{w} (\mathbf{u}) = D_\mathbf{w}(\mathbf{Zw -t}) = \mathbf{z}\\
+&D_\mathbf{w} (\mathbf{J}(\mathbf{w})) = D_\mathbf{u}(\mathbf{J})D_\mathbf{w}(\mathbf{u}) = \mathbf{u^\top Z} = \mathbf{(Zw-t)^\top Z}
+\end{align*}
+Set gradient to zero to find the point of minimal cost function (if possible, can someone knowledgeable tell why we can directly get minimal by setting gradient to zero?): 
+\begin{align*}
+&D_\mathbf{w} \mathbf{J}(\mathbf{w}) = 0 \\
+&\Longrightarrow 0 = \mathbf{(Zw-t)^\top Z} \\
+&\Longrightarrow 0 = \mathbf{(Zw)^\top z - t^\top Z} \\
+&\Longrightarrow 0 = \mathbf{w^\top Z^\top Z - t^\top Z} \\
+&\Longrightarrow \mathbf{t^\top Z = w^\top Z^\top Z}\\
+&\Longrightarrow \mathbf{Z^\top t = Z^\top Z w} \\
+&\Longrightarrow \mathbf{w} = \mathbf{(Z^\top Z)}^{-1} \mathbf{Z^\top t}, \text{ which is the normal equation} 
+\end{align*}
+\end{document}
